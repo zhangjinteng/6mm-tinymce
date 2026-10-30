@@ -166,7 +166,7 @@ const register = (editor: Editor, registryContextToolbars: Record<string, Contex
   const getScopes: () => ScopedToolbars = Thunk.cached(() => ToolbarScopes.categorise(registryContextToolbars, navigate));
 
   const buildContextToolbarGroups = (allButtons: Record<string, ContextToolbarButtonType>, ctx: InlineContent.ContextToolbarSpec) => {
-    return identifyButtons(editor, { buttons: allButtons, toolbar: ctx.items, allowToolbarGroups: false }, extras.backstage, Optional.some([ 'form:', 'toolbar:' ]));
+    return identifyButtons(editor, { buttons: allButtons, toolbar: ctx.items, allowToolbarGroups: true }, extras.backstage, Optional.some([ 'form:', 'toolbar:' ]));
   };
 
   const buildContextFormGroups = (ctx: InlineContent.ContextForm, providers: UiFactoryBackstageProviders) => ContextForm.buildInitGroups(ctx, providers);

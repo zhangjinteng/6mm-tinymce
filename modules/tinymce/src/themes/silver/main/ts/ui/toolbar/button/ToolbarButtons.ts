@@ -212,7 +212,7 @@ const renderFloatingToolbarButton = (spec: Toolbar.GroupToolbarButton, backstage
         dom: {
           tag: 'div',
           classes: [ 'tox-toolbar__overflow' ],
-          attributes
+          attributes: { ...attributes, 'data-toolbar-group': btnName ?? '', 'data-toolbar-group-label': spec.tooltip.getOr('') }
         }
       }
     }

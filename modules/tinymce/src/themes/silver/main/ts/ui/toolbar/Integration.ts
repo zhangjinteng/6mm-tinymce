@@ -5,7 +5,7 @@ import { Arr, Obj, Optional, Optionals, type Result, Type } from '@ephox/katamar
 
 import type Editor from 'tinymce/core/api/Editor';
 
-import { getToolbarMode, type ToolbarGroupOption, ToolbarMode } from '../../api/Options';
+import type { ToolbarGroupOption } from '../../api/Options';
 import type { UiFactoryBackstage } from '../../backstage/Backstage';
 import type { ToolbarConfig } from '../../Render';
 import { renderMenuButton } from '../button/MenuButton';
@@ -94,13 +94,8 @@ const types: Record<string, BridgeRenderFn<any>> = {
         [VerticalDir.Attribute]: backstage.shared.header.isPositionedAtTop() ? VerticalDir.AttributeValue.TopToBottom : VerticalDir.AttributeValue.BottomToTop
       };
 
-      switch (getToolbarMode(editor)) {
-        case ToolbarMode.floating:
-          return renderFloatingToolbarButton(s, backstage, identify, attributes, btnName);
-        default:
-          // TODO change this message and add a case when sliding is available
-          throw new Error('Toolbar groups are only supported when using floating toolbar mode');
-      }
+      // 分组弹层独立于主工具栏的溢出模式，也可由上下文工具栏打开。
+      return renderFloatingToolbarButton(s, backstage, identify, attributes, btnName);
     }
   )
 };

@@ -83,7 +83,8 @@ const makeSandbox = (button: AlloyComponent, spec: FloatingToolbarButtonSpec, de
   const onClose = () => {
     // Toggle and focus the button
     Toggling.off(button);
-    if (!shouldSkipFocus.get().getOr(false)) {
+    // 上下文工具栏切换选中对象时，关闭分类面板不能抢回旧工具栏的焦点。
+    if (!shouldSkipFocus.get().getOr(false) && !button.element.dom.closest('.tox-pop')) {
       Focusing.focus(button);
     }
     ariaControls.unlink(button.element);
@@ -101,7 +102,9 @@ const makeSandbox = (button: AlloyComponent, spec: FloatingToolbarButtonSpec, de
         Keying.config({
           mode: 'special',
           onEscape: (comp) => {
+            const returnFocus = !!button.element.dom.closest('.tox-pop');
             Sandboxing.close(comp);
+            if (returnFocus) Focusing.focus(button);
             return Optional.some<boolean>(true);
           }
         }),
